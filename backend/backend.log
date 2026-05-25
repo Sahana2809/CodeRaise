@@ -1,0 +1,6 @@
+
+> backend@1.0.0 start
+> node server.js
+
+◇ injected env (0) from .env // tip: ⌘ enable debugging { debug: true }
+🚀 CodeRaise Backend running on port 5001

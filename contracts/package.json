@@ -1,0 +1,15 @@
+{
+  "name": "coderaise-contracts",
+  "version": "1.0.0",
+  "description": "CodeRaise - Open Source Crowdfunding Smart Contracts",
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "test": "npx hardhat test",
+    "node": "npx hardhat node",
+    "deploy": "npx hardhat run scripts/deploy.js --network localhost"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "hardhat": "^2.22.0"
+  }
+}
