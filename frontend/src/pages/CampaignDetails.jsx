@@ -68,12 +68,16 @@ export default function CampaignDetails() {
 
       // Check if current user has voted on each milestone
       if (account) {
-        const votes = {};
-        for (let i = 0; i < campaignInfo.currentMilestone; i++) {
-          const voted = await campaignContract.hasVotedOnMilestone(i, account);
-          votes[i] = voted;
+        try {
+          const votes = {};
+          for (let i = 0; i < campaignInfo.currentMilestone; i++) {
+            const voted = await campaignContract.hasVotedOnMilestone(i, account);
+            votes[i] = voted;
+          }
+          setHasVotedOnMilestone(votes);
+        } catch (err) {
+          console.error("Error fetching votes:", err);
         }
-        setHasVotedOnMilestone(votes);
       }
 
       // Fetch contributors
@@ -87,8 +91,17 @@ export default function CampaignDetails() {
 
         // Fetch user contribution
         if (account) {
-          const uContrib = await campaignContract.contributions(account);
-          setUserContribution(ethers.formatEther(uContrib));
+          try {
+            const uContrib = await campaignContract.contributions(account);
+            setUserContribution(ethers.formatEther(uContrib));
+          } catch (e) {
+            console.error("Error fetching user contribution:", e);
+            // Fallback: check contributorList
+            const match = contributorsList.find(c => c.address.toLowerCase() === account.toLowerCase());
+            if (match) {
+              setUserContribution(match.amount);
+            }
+          }
         }
       } catch (err) {
         console.error("Error fetching contributors:", err);
